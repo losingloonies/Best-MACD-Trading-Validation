@@ -1,58 +1,61 @@
-#  Validating the "Best MACD Trading Strategy"
+# MACD Trading Strategy Validation
 
-This project tests and validates the **MACD (Moving Average Convergence Divergence)** trading strategy discussed in a YouTube video.  
-The script simulates trades, applies risk management, and visualizes performance across multiple time-series plots.
+This project tests and validates a **MACD-based trading strategy** using historical stock data (example: `AMZN_daily.csv`).
 
- **Watch my breakdown video here:**  
-[▶LosingLoonies YouTube Channel](https://www.youtube.com/@LosingLoonies)
+The strategy uses:
+- 12-day and 26-day exponential moving averages (EMAs)
+- A 9-day signal line
+- A 200-day EMA to determine long-term trend direction
 
- **Original video I tested this strategy from:**  
-[Best MACD Strategy Video (External Source)](https://www.youtube.com/watch?v=rf_EQvubKlk&t=6s)
+A buy signal occurs when:
+- MACD histogram crosses from negative to positive,
+- both MACD and Signal are below zero, and
+- the trend is upward (price > EMA200).
+
+Each trade applies basic risk management with:
+- Stop loss: 2%
+- Take profit: 3% (1.5× risk)
+
+---
+## Related Video
+
+Watch the full breakdown on YouTube:  
+[Losing Loonies YouTube Channel](https://www.youtube.com/@LosingLoonies)
+[Losing Loonies Patreon](https://www.patreon.com/c/LosingLoonies)
+
+
+
+## Portfolio Simulation
+
+The script simulates an initial portfolio of **$1000**, applying the strategy over time.
+Each trade outcome (win or loss) affects the portfolio’s value.
+
+At the end, the script prints:
+- Total accuracy (percentage of winning trades)
+- Portfolio performance over time
 
 ---
 
-## Overview
+## Results
 
-This Python script:
-- Loads historical stock data (`data.csv`)
-- Computes **MACD**, **Signal Line**, and **Histogram**
-- Identifies **buy signals** based on MACD crossovers and EMA200 trend filtering
-- Simulates portfolio growth with **adjustable stop-loss** and **take-profit ratios**
-- Visualizes:
-  - Price with EMA200 and trade markers
-  - MACD + Signal overlays
-  - Histogram bars
-  - Portfolio value growth over time
+Below are the generated results from the simulation.
 
----
+### Figure 1 — Trading Strategy Visualization
+Shows:
+- Price vs EMA200
+- MACD and Signal lines
+- Histogram and buy points
 
-## Strategy Logic
-
-**Buy Entry Conditions**
-- MACD histogram crosses from negative → positive  
-- Both MACD and Signal are below 0 (momentum shift from bearish to bullish)  
-- Closing price is **above EMA200** (confirming uptrend)
-
-**Risk Management**
-- **Stop Loss:** 2% (default)
-- **Take Profit:** 1.5× stop loss (3% in this config)
-- Each trade is executed sequentially (no compounding positions)
+![Figure 1: Trading Strategy](figures/figure1_trading_strategy.png)
 
 ---
 
-##isual Outputs
+### Figure 2 — Portfolio Value Over Time
+Shows:
+- Portfolio growth (or decline) over time
+- Each trade’s cumulative effect on total value
 
-The script produces the following plots in a YouTube-friendly **16:9 layout**:
-1. **Price Chart:** Close price, EMA200, and buy markers  
-2. **MACD Plot:** MACD, Signal, and crossover arrows  
-3. **Histogram Plot:** Green (positive) vs red (negative) bars  
-4. **Portfolio Value:** Growth curve based on executed trades
+![Figure 2: Portfolio Value Over Time](figures/figure2_portfolio_value.png)
 
 ---
 
-## Requirements
-
-Install the dependencies before running:
-
-```bash
-pip install numpy pandas matplotlib
