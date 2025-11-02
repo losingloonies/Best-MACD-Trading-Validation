@@ -25,7 +25,7 @@ long_window = 26
 signal_window = 9
 
 # Load data
-df = pd.read_csv('data.csv')
+df = pd.read_csv('AMZN_daily.csv')
 df['date'] = pd.to_datetime(df['date'])
 
 # Calculate EMAs and MACD
@@ -35,7 +35,7 @@ df['MACD'] = df['EMA12'] - df['EMA26']
 df['Signal'] = df['MACD'].ewm(span=signal_window, adjust=False).mean()
 df['hist_difference'] = df['MACD'] - df['Signal']
 df['EMA200'] = df['close'].ewm(span=200, adjust=False).mean()
-df["trendDirection"] = np.where(df["close"] > df["EMA200"], "up", "down")
+df['trendDirection'] = np.where(df['close'] > df['EMA200'], "up", "down")
 
 # ---- Buy Signal ----
 df['Buy_Signal'] = 0
@@ -161,3 +161,11 @@ plt.tight_layout()
 # Optional: Save in full HD resolution
 # plt.savefig('portfolio_plot.png', dpi=200, bbox_inches='tight')
 plt.show()
+
+#Accuracy scoring
+if len(trades) > 0:
+    total_trades = len(trades)
+    wins = sum(1 for t in trades if t[4] == 'win')
+    losses = total_trades - wins
+    accuracy = (wins/total_trades) * 100
+    print(f'Accuracy: {accuracy:.2f}% trades were profitable')
